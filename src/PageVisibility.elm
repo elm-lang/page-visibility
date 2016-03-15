@@ -1,10 +1,10 @@
-effect module PageVisibility { subscription = MySub }
-    ( Visibility(..)
-    , isHidden, isVisible, visibility
-    , visibilityChanges
-    , onVisibilityChange
-    )
-    where
+effect module PageVisibility where { subscription = MySub } exposing
+  ( Visibility(..)
+  , isHidden, isVisible, visibility
+  , visibilityChanges
+  , onVisibilityChange
+  )
+
 {-|
 
 # Page Visibility
@@ -28,7 +28,7 @@ import Task exposing (Task)
 
 {-| Value describing whether the page is hidden or visible.
 -}
-type Visibility = Visibile | Hidden
+type Visibility = Visible | Hidden
 
 
 {-| Get the current page visibility.
@@ -40,7 +40,7 @@ visibility =
 
 hiddenToVisibility : Bool -> Visibility
 hiddenToVisibility hidden =
-  if hidden then Hidden else Visibile
+  if hidden then Hidden else Visible
 
 
 {-| Is the page hidden?
