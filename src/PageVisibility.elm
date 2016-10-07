@@ -103,15 +103,11 @@ onEffects router newSubs state =
 
     (Nothing, _ :: _) ->
       Process.spawn (onVisibilityChange (Platform.sendToSelf router))
-          `Task.andThen` \pid ->
-
-      Task.succeed (Just { subs = newSubs, pid = pid })
+        |> Task.andThen (\pid -> Task.succeed (Just { subs = newSubs, pid = pid }))
 
     (Just {pid}, []) ->
       Process.kill pid
-          `Task.andThen` \_ ->
-
-      Task.succeed Nothing
+        |> Task.andThen (\_ -> Task.succeed Nothing)
 
     (Just {pid}, _ :: _) ->
       Task.succeed (Just { subs = newSubs, pid = pid })
@@ -129,9 +125,7 @@ onSelfMsg router hidden state =
           Platform.sendToApp router (tagger (hiddenToVisibility hidden))
       in
         Task.sequence (List.map send subs)
-          `Task.andThen` \_ ->
-
-        Task.succeed state
+          |> Task.andThen (\_ -> Task.succeed state)
 
 
 
